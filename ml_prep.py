@@ -1,7 +1,6 @@
 from pathlib import Path
 import pandas as pd
 import re
-from bio_embeddings.embed import SeqVecEmbedder
 
 
 def creating_AA_factors():
@@ -12,7 +11,7 @@ def creating_AA_factors():
 
     """
 
-    full_df = pd.read_csv(Path("NAMP+AMP.csv"))
+    full_df = pd.read_csv(Path("data/NAMP+AMP.csv"))
 
     AA_list = full_df["Seq"].values.tolist()
     AA_string = "".join(AA_list)
@@ -51,7 +50,7 @@ def creating_AA_factors():
         full_df[c] = full_df["Seq"].str.count(c)
 
     
-    full_df.to_csv("NAMP+AMP.csv", index = False)
+    full_df.to_csv(Path("data/NAMP+AMP.csv"), index = False)
 
 
 
@@ -71,6 +70,7 @@ def creating_more_factors():
 
 
 
+
 def split_dataset():
     """
     80% training set 
@@ -78,7 +78,7 @@ def split_dataset():
     10% test set for the end
     """
 
-    full_df = pd.read_csv(Path("NAMP+AMP.csv"))
+    full_df = pd.read_csv(Path("data/NAMP+AMP.csv"))
 
     nrows = len(full_df) -1
     print(nrows)
@@ -125,9 +125,9 @@ def split_dataset():
 
     print(training_df.shape, validation_df.shape, test_df.shape)
 
-    training_df.to_csv("training.csv", index = False)
-    validation_df.to_csv("validation.csv", index = False)
-    test_df.to_csv("test.csv", index = False)
+    training_df.to_csv("data/training.csv", index = False)
+    validation_df.to_csv("data/validation.csv", index = False)
+    test_df.to_csv("data/test.csv", index = False)
     
     return
 

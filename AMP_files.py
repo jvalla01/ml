@@ -5,13 +5,13 @@ from Bio import SeqIO
 from sklearn.utils import shuffle
 
 
-def concat_files(archaea = Path("dbAMP_archaea_2024.fasta"), bact = Path("dbAMP_bacteria_2024.fasta"))->None:
+def concat_files(archaea = Path("data/dbAMP_archaea_2024.fasta"), bact = Path("data/dbAMP_bacteria_2024.fasta"))->None:
     """
     # merge the bacteria and archaea fasta files from DBAMP into one fasta file
     """
-    archaea = Path("dbAMP_archaea_2024.fasta")
-    bact = Path("dbAMP_bacteria_2024.fasta")
-    both = Path("AMP.fasta")
+    archaea = Path("data/dbAMP_archaea_2024.fasta")
+    bact = Path("data/dbAMP_bacteria_2024.fasta")
+    both = Path("data/AMP.fasta")
 
     data = data2 = "";
 
@@ -38,7 +38,7 @@ def concat_files(archaea = Path("dbAMP_archaea_2024.fasta"), bact = Path("dbAMP_
 
 concat_files()
 
-def fasta2table(fasta= Path("AMP.fasta"))->pd.DataFrame:
+def fasta2table(fasta= Path("data/AMP.fasta"))->pd.DataFrame:
     """
     # Makes a blank dict
     # Take the concatenated fasta file
@@ -46,8 +46,8 @@ def fasta2table(fasta= Path("AMP.fasta"))->pd.DataFrame:
     # Put each fasta file into the table
     # Clean empty rows, duplicates sequences with B and Z amino acids
     """
-    fasta= Path("AMP.fasta")
-    ouputcsv = Path("AMP.csv")
+    fasta= Path("data/AMP.fasta")
+    ouputcsv = Path("data/AMP.csv")
     header2seq = {}
 
     with open(fasta) as f:
@@ -71,8 +71,8 @@ def fasta2table(fasta= Path("AMP.fasta"))->pd.DataFrame:
     #print(df1.loc["dbAMP_12356"])
     #print(df1[])
     
-    df1.to_csv("AMP.csv")
-    df2 = pd.read_csv("AMP.csv", index_col=False, names=["ID", "Seq"])
+    df1.to_csv(Path("data/AMP.csv"))
+    df2 = pd.read_csv(Path("data/AMP.csv"), index_col=False, names=["ID", "Seq"])
     
     #remove empty rows
     # remove duplicate sequences
@@ -87,7 +87,7 @@ def fasta2table(fasta= Path("AMP.fasta"))->pd.DataFrame:
     df3 = df3[df3["Seq"].str.contains("U") == False]
     
 
-    df3.to_csv("AMP.csv", index = False)
+    df3.to_csv("data/AMP.csv", index = False)
 
     
     return df3
@@ -96,18 +96,18 @@ def fasta2table(fasta= Path("AMP.fasta"))->pd.DataFrame:
 fasta2table()
 
 
-def seqlength(df3 = Path("AMP.csv")):
+def seqlength(df3 = Path("data/AMP.csv")):
     """
     # Get the sequence lengths
     # Add a column with sequence lengths
     # Create summary statistics
     """
 
-    df3 = pd.read_csv(Path("AMP.csv"))
+    df3 = pd.read_csv(Path("data/AMP.csv"))
 
     df3["Length"] = df3["Seq"].str.len()
 
-    df3.to_csv("AMP.csv", index = False)
+    df3.to_csv(Path("data/AMP.csv"), index = False)
     
     return df3.describe()
 
@@ -115,9 +115,9 @@ def seqlength(df3 = Path("AMP.csv")):
 
 print(seqlength())
 
-def get_uniprot_samples(df4=Path("uniprotkb_reviewed_true_AND_existence_1_2025_08_21.tsv")):
+def get_uniprot_samples(df4=Path("data/uniprotkb_reviewed_true_AND_existence_1_2025_08_21.tsv")):
 
-    df4 = pd.read_csv(Path("uniprotkb_reviewed_true_AND_existence_1_2025_08_21.tsv"),sep = '\t')
+    df4 = pd.read_csv(Path("data/uniprotkb_reviewed_true_AND_existence_1_2025_08_21.tsv"),sep = '\t')
 
     #filter out uncharacterized protein
 
@@ -139,7 +139,7 @@ def get_uniprot_samples(df4=Path("uniprotkb_reviewed_true_AND_existence_1_2025_0
 
     df5 = filtered_df.head(773)
 
-    df5.to_csv("nonAMP.csv", index = False)
+    df5.to_csv(Path("data/nonAMP.csv"), index = False)
 
 
     return df5.describe()
@@ -180,11 +180,11 @@ def merge_files():
 
     #read in csvs, tidy column names and add column for whether it is an AMP
 
-    AMP_df = pd.read_csv(Path("AMP.csv"))
+    AMP_df = pd.read_csv(Path("data/AMP.csv"))
     AMP_df["AMP"]="Yes"
 
 
-    NAMP_df = pd.read_csv(Path("nonAMP.csv"), usecols=["Entry", "Sequence", "Length"])
+    NAMP_df = pd.read_csv(Path("data/nonAMP.csv"), usecols=["Entry", "Sequence", "Length"])
     NAMP_df = NAMP_df.rename(columns={'Entry': 'ID', 'Sequence': 'Seq'})
     NAMP_df["AMP"]="No"
 
@@ -208,7 +208,7 @@ def merge_files():
 
     # save as csv
 
-    mixed_df.to_csv("NAMP+AMP.csv", index = False)
+    mixed_df.to_csv(Path("data/NAMP+AMP.csv"), index = False)
 
 
 

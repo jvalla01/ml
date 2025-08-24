@@ -4,6 +4,8 @@ from sgt import SGT
 
 import numpy as np
 import pandas as pd
+from pathlib import Path
+from sklearn.preprocessing import LabelEncoder
 
 #First trying steps from tutorial before applying to data
 #SGT embedding tutorial
@@ -36,3 +38,38 @@ sgt = SGT(kappa=1,
 sgt.fit_transform(corpus)
 print(sgt.fit_transform(corpus))
 
+# will it work on my sequences
+
+
+
+
+full_df = pd.read_csv(Path("data/NAMP+AMP.csv"))
+
+
+# y = full_df['AMP']
+# encoder = LabelEncoder()
+# encoder.fit(y)
+# encoded_y = encoder.transform(y)
+
+full_df['Seq'] = full_df['Seq'].map(list)
+full_df = full_df.rename(columns={'Seq': 'sequence', 'ID': 'id'})
+print((full_df[0:5]))
+
+
+sgt_ = SGT(kappa=1, 
+           lengthsensitive=False, 
+           mode='default')
+sgtembedding_df = sgt_.fit_transform(full_df)
+X = sgtembedding_df.set_index('id')
+
+print("--------------------------")
+print(sgtembedding_df)
+print("--------------------------")
+print(X)
+print("------------------")
+print(y)
+print(encoded_y)
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier

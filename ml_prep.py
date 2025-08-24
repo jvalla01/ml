@@ -1,7 +1,11 @@
 from pathlib import Path
 import pandas as pd
 import re
-
+from sklearn.preprocessing import LabelEncoder
+import numpy as np
+import sgt
+print(sgt.__version__)
+from sgt import SGT
 
 def creating_AA_factors():
     """
@@ -56,31 +60,19 @@ def creating_AA_factors():
 
     return unique_AA
 
-print(creating_factors())
-
-def creating_more_factors():
-    """
-    - Hydrophobicity with GRAVY score
-    - Charge
-    - "They are known to be cationic amphiphilic molecules but how are they different from other amphiphilic cationic molecules" - "https://pmc.ncbi.nlm.nih.gov/articles/PMC6513345/"
-    - embeddings https://github.com/sacdallago/bio_embeddings?tab=readme-ov-file
-    """
+#print(creating_factors())
 
 
 
-
-
-
-def split_dataset():
+def split_dataset(df):
     """
     80% training set 
     10% validation set to tune parameters 
     10% test set for the end
     """
+    
 
-    full_df = pd.read_csv(Path("data/NAMP+AMP.csv"))
-
-    nrows = len(full_df) -1
+    nrows = len(df) -1
     print(nrows)
     no_training_rows = round(nrows*0.8)
 
@@ -119,17 +111,74 @@ def split_dataset():
     test_index2 = test_index1 + no_test -1
     print(test_index2)
 
-    training_df =  full_df.loc[0:training_index2]
-    validation_df = full_df.loc[validation_index1:validation_index2]
-    test_df = full_df.loc[test_index1:test_index2]
+    training_df =  df.loc[0:training_index2]
+    validation_df = df.loc[validation_index1:validation_index2]
+    test_df = df.loc[test_index1:test_index2]
 
     print(training_df.shape, validation_df.shape, test_df.shape)
 
-    training_df.to_csv("data/training.csv", index = False)
-    validation_df.to_csv("data/validation.csv", index = False)
-    test_df.to_csv("data/test.csv", index = False)
+    training_df.to_csv(Path("data/training.csv"), index = False)
+    validation_df.to_csv(Path("data/validation.csv"), index = False)
+    test_df.to_csv(Path("data/test.csv"), index = False)
     
     return
 
+    # 
+    # - Other things i could look at notes
+    # - Hydrophobicity with GRAVY score
+    # - Charge
+    # - "They are known to be cationic amphiphilic molecules but how are they different from other amphiphilic cationic molecules" - "https://pmc.ncbi.nlm.nih.gov/articles/PMC6513345/"
+    # - embeddings https://github.com/sacdallago/bio_embeddings?tab=readme-ov-file
+    # 
+
+def embedding():
+
+
+    training_df = pd.read_csv(Path("data/training.csv"))
+    validation_df = pd.read_csv(Path("data/validation.csv"))
+    test_df = pd.read_csv(Path("data/test.csv"))
+
+    j = 0
+    for df in training_df, validation_df, test_df:
+
+        # extracts just the dependent variable and changes it from yes and no to numerical
+
+        y = df['AMP']
+        encoder = LabelEncoder()
+        encoder.fit(y)
+        y = encoder.transform(y)
+        y = pd.Series(y)
+
+        # turns the sequence into individual letters for encoding and changes names for the sgt function to understand
+
+        df['Seq'] = df['Seq'].map(list)
+        df = df.rename(columns={'Seq': 'sequence', 'ID': 'id'})
+
+        #encodes the sequences
+
+
+        sgt_ = SGT(kappa=1, 
+                lengthsensitive=False, 
+                mode='default')
+        sgtembedding_df = sgt_.fit_transform(df)
+        x = sgtembedding_df.set_index('id')
+
+        #saves the datasets
+
+        if j == 0:
+            x.to_csv(Path("data/training_x.csv"), index = False)
+            y.to_csv(Path("data/training_y.csv"), index = False)
+            j+=1
+        elif j ==1:
+            x.to_csv(Path("data/validation_x.csv"), index = False)
+            y.to_csv(Path("data/validation_y.csv"), index = False)
+            j+=1
+        else:
+            x.to_csv(Path("data/test_x.csv"), index = False)
+            y.to_csv(Path("data/test_y.csv"), index = False)
+
+    return
+
+#embedding()
 
 

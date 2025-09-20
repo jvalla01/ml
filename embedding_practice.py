@@ -69,7 +69,3 @@ print(X)
 print("------------------")
 print(y)
 print(encoded_y)
-
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
-from sklearn.tree import DecisionTreeClassifier

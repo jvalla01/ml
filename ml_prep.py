@@ -6,6 +6,8 @@ import numpy as np
 import sgt
 print(sgt.__version__)
 from sgt import SGT
+from joblib import Parallel, delayed
+import joblib
 
 def creating_AA_factors():
     """
@@ -177,8 +179,11 @@ def embedding():
             x.to_csv(Path("data/test_x.csv"), index = False)
             y.to_csv(Path("data/test_y.csv"), index = False)
 
+        # Save the model as a pickle in a file
+        joblib.dump(sgt_, 'SGT.pkl')
+
     return
 
-#embedding()
+embedding()
 
 

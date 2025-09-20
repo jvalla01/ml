@@ -8,6 +8,13 @@ from pathlib import Path
 from sklearn.metrics import classification_report
 import numpy as np
 from sklearn.neural_network import MLPClassifier
+from sklearn.ensemble import RandomForestClassifier
+# Tree Visualisation
+from sklearn.tree import export_graphviz
+from IPython.display import Image
+from IPython.display import display
+import graphviz
+
 
 def testing_ml():
     """
@@ -107,7 +114,7 @@ def testing_nn():
 
     return
 
-testing_nn()
+#testing_nn()
 
 
 """
@@ -120,4 +127,89 @@ Neural Network Results:
     accuracy                           0.82       154
    macro avg       0.83      0.82      0.82       154
 weighted avg       0.83      0.82      0.82       154
+"""
+def testing_rf():
+    """
+    """
+
+    X_train = pd.read_csv(Path("data/training_x.csv"))
+    y_train = pd.read_csv(Path("data/training_y.csv"))
+    y_train = y_train.squeeze()
+    X_test = pd.read_csv(Path("data/test_x.csv"))
+    y_test = pd.read_csv(Path("data/test_y.csv"))
+    y_test = y_test.squeeze()
+
+    rf = RandomForestClassifier()
+    rf.fit(X_train, y_train)
+
+    rf_preds = rf.predict(X_test)
+
+    print(f"Random forest Results:\n{classification_report(y_test, rf_preds)}", sep="\n\n")
+
+    return
+
+#testing_rf()
+
+"""
+Random forest Results:
+              precision    recall  f1-score   support
+
+           0       0.91      0.91      0.91        77
+           1       0.91      0.91      0.91        77
+
+    accuracy                           0.91       154
+   macro avg       0.91      0.91      0.91       154
+weighted avg       0.91      0.91      0.91       154
+"""
+
+def checking_rf():
+    """
+    """
+
+    X_train = pd.read_csv(Path("data/training_x.csv"))
+    y_train = pd.read_csv(Path("data/training_y.csv"))
+    y_train = y_train.squeeze()
+    X_test = pd.read_csv(Path("data/validation_x.csv"))
+    y_test = pd.read_csv(Path("data/validation_y.csv"))
+    y_test = y_test.squeeze()
+
+    rf = RandomForestClassifier()
+    rf.fit(X_train, y_train)
+
+    rf_preds = rf.predict(X_test)
+
+    print(f"Random forest Results:\n{classification_report(y_test, rf_preds)}", sep="\n\n")
+
+    for i in range(3):
+        tree = rf.estimators_[i]
+        dot_data = export_graphviz(tree,
+                                feature_names=X_train.columns,  
+                                filled=True,  
+                                max_depth=2, 
+                                impurity=False, 
+                                proportion=True)
+        graph = graphviz.Source(dot_data)
+            # Save as PNG
+        filename = f"tree_{i}.png"
+        graph.render(filename=filename, format='png', cleanup=True)
+        print(f"Saved tree {i} as {filename}")
+
+    return
+
+checking_rf()
+
+"""
+Random forest Results:
+              precision    recall  f1-score   support
+
+           0       0.93      0.94      0.94        70
+           1       0.95      0.94      0.95        85
+
+    accuracy                           0.94       155
+   macro avg       0.94      0.94      0.94       155
+weighted avg       0.94      0.94      0.94       155
+
+Saved tree 0 as tree_0.png
+Saved tree 1 as tree_1.png
+Saved tree 2 as tree_2.png
 """

@@ -1,3 +1,5 @@
+#practising using the model on a fresh sequence 
+
 from joblib import Parallel, delayed
 import joblib
 from pathlib import Path

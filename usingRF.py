@@ -19,18 +19,22 @@ sgt = joblib.load('SGT.pkl')
 #preds = rf.predict(X_test)
 X_train = pd.read_csv("data/training_x.csv")  # to get the original column names
 
-#embed sequences
+#embed sequences...
+    #make sequence into a list
 sequence = "PTAVLAFLADGESWSSSALALSLGTSQRTVQRALDSLGAAGKVQSFGRGRARRWMTPPVPGFATTLLLPAPLPID"
 seqlist = list(sequence)
 #print(seqlist)
 
-
+    #fit the pretrained sgt model
 embedded_seq=sgt.fit(seqlist)
 embedded_seq=pd.DataFrame(embedded_seq)
 
+    #reformat 
 embedded_seq = embedded_seq.T
 embedded_seq.columns = X_train.columns
 print(embedded_seq)
+
+
 #use rf.predict
 prediction = rf.predict(embedded_seq)
 

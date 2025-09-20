@@ -62,7 +62,7 @@ print('Best hyperparameters:',  rand_search.best_params_)
 # Save the model as a pickle in a file
 joblib.dump(best_rf, 'RF.pkl')
 
-#save the pictures of trees
+# save the pictures of trees
 for i in range(3):
         tree = best_rf.estimators_[i]
         dot_data = export_graphviz(tree,
@@ -92,40 +92,12 @@ weighted avg       0.92      0.92      0.92       154
 Random forest Results:
               precision    recall  f1-score   support
 
-           0       0.93      0.94      0.94        70
-           1       0.95      0.94      0.95        85
+           0       0.92      0.94      0.93        70
+           1       0.95      0.93      0.94        85
 
     accuracy                           0.94       155
-   macro avg       0.94      0.94      0.94       155
+   macro avg       0.93      0.94      0.94       155
 weighted avg       0.94      0.94      0.94       155
 
-Best hyperparameters: {'max_depth': 15, 'n_estimators': 222}
-Saved tree 0 as tree_0
-Saved tree 1 as tree_1
-Saved tree 2 as tree_2
-(myenv) jessica@Jessica-Yoga-6-13ALC6:~/Documents/university/birkbeck/thesis/ml_datasets/ml$ /home/jessica/venv/myenv/bin/python /home/jessica/Documents/university/birkbeck/thesis/ml_datasets/ml/randomforest.py
-Random forest Results:
-              precision    recall  f1-score   support
-
-           0       0.91      0.92      0.92        77
-           1       0.92      0.91      0.92        77
-
-    accuracy                           0.92       154
-   macro avg       0.92      0.92      0.92       154
-weighted avg       0.92      0.92      0.92       154
-
-Random forest Results:
-              precision    recall  f1-score   support
-
-           0       0.93      0.94      0.94        70
-           1       0.95      0.94      0.95        85
-
-    accuracy                           0.94       155
-   macro avg       0.94      0.94      0.94       155
-weighted avg       0.94      0.94      0.94       155
-
-Best hyperparameters: {'max_depth': 16, 'n_estimators': 398}
-Saved tree 0 as tree_0
-Saved tree 1 as tree_1
-Saved tree 2 as tree_2
+Best hyperparameters: {'max_depth': 12, 'n_estimators': 317}
 """

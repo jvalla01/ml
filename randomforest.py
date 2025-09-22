@@ -92,7 +92,27 @@ weighted avg       0.92      0.92      0.92       154
 Random forest Results:
               precision    recall  f1-score   support
 
-           0       0.92      0.94      0.93        70
+           0       0.92      0.94      0.93        70Random forest Results:
+              precision    recall  f1-score   support
+
+           0       0.93      0.93      0.93        72
+           1       0.93      0.93      0.93        74
+
+    accuracy                           0.93       146
+   macro avg       0.93      0.93      0.93       146
+weighted avg       0.93      0.93      0.93       146
+
+Random forest Results:
+              precision    recall  f1-score   support
+
+           0       0.94      0.88      0.91        73
+           1       0.88      0.95      0.91        73
+
+    accuracy                           0.91       146
+   macro avg       0.91      0.91      0.91       146
+weighted avg       0.91      0.91      0.91       146
+
+Best hyperparameters: {'max_depth': 15, 'n_estimators': 168}
            1       0.95      0.93      0.94        85
 
     accuracy                           0.94       155
@@ -100,4 +120,29 @@ Random forest Results:
 weighted avg       0.94      0.94      0.94       155
 
 Best hyperparameters: {'max_depth': 12, 'n_estimators': 317}
+"""
+
+"""
+with new model trained with xs removed... and new test/validation
+Random forest Results:
+              precision    recall  f1-score   support
+
+           0       0.93      0.93      0.93        72
+           1       0.93      0.93      0.93        74
+
+    accuracy                           0.93       146
+   macro avg       0.93      0.93      0.93       146
+weighted avg       0.93      0.93      0.93       146
+
+Random forest Results:
+              precision    recall  f1-score   support
+
+           0       0.94      0.88      0.91        73
+           1       0.88      0.95      0.91        73
+
+    accuracy                           0.91       146
+   macro avg       0.91      0.91      0.91       146
+weighted avg       0.91      0.91      0.91       146
+
+Best hyperparameters: {'max_depth': 15, 'n_estimators': 168}
 """

@@ -57,7 +57,7 @@ def testing_ml():
 
     return
 
-#testing_ml()
+testing_ml()
 
 """
 Logistic Regression Results:
@@ -114,7 +114,7 @@ def testing_nn():
 
     return
 
-#testing_nn()
+testing_nn()
 
 
 """
@@ -148,7 +148,7 @@ def testing_rf():
 
     return
 
-#testing_rf()
+testing_rf()
 
 """
 Random forest Results:
@@ -196,7 +196,7 @@ def checking_rf():
 
     return
 
-checking_rf()
+#checking_rf()
 
 """
 Random forest Results:

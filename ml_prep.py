@@ -66,13 +66,14 @@ def creating_AA_factors():
 
 
 
-def split_dataset(df):
+def split_dataset(mixed_dataset=Path("data/NAMP+AMP.csv")):
     """
     80% training set 
     10% validation set to tune parameters 
     10% test set for the end
     """
     
+    df = pd.read_csv(mixed_dataset)
 
     nrows = len(df) -1
     print(nrows)
@@ -133,6 +134,8 @@ def split_dataset(df):
     # - embeddings https://github.com/sacdallago/bio_embeddings?tab=readme-ov-file
     # 
 
+#split_dataset()
+
 def embedding():
 
 
@@ -158,12 +161,16 @@ def embedding():
 
         #encodes the sequences
 
+        print(df)
+
 
         sgt_ = SGT(kappa=1, 
                 lengthsensitive=False, 
                 mode='default')
         sgtembedding_df = sgt_.fit_transform(df)
         x = sgtembedding_df.set_index('id')
+
+        
 
         #saves the datasets
 

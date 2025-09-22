@@ -23,11 +23,11 @@ X_train = pd.read_csv("data/training_x.csv")  # to get the original column names
 
 #embed sequences...
     #make sequence into a list
-sequence = "PTAVLAFLADGESWSSSALALSLGTSQRTVQRALDSLGAAGKVQSFGRGRARRWMTPPVPGFATTLLLPAPLPID"
+sequence = "AQKCGEQGRGAKCPNCLCCGRYGFCGSTPDYCGVGCQSQCRGCR"
 seqlist = list(sequence)
 #print(seqlist)
 
-    #fit the pretrained sgt model
+    #fit the sgt model
 embedded_seq=sgt.fit(seqlist)
 embedded_seq=pd.DataFrame(embedded_seq)
 

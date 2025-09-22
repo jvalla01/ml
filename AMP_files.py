@@ -80,11 +80,12 @@ def fasta2table(fasta= Path("data/AMP.fasta"))->pd.DataFrame:
     df3 = df2.dropna()
     df3 = df3.drop_duplicates(subset=['Seq'])
 
-    #remove B, U and Z amino acids
+    #remove B, U and Z amino acids AND X
 
     df3 = df3[df3["Seq"].str.contains("B") == False]
     df3 = df3[df3["Seq"].str.contains("Z") == False]
     df3 = df3[df3["Seq"].str.contains("U") == False]
+    df3 = df3[df3["Seq"].str.contains("X") == False]
     
 
     df3.to_csv("data/AMP.csv", index = False)
@@ -134,10 +135,11 @@ def get_uniprot_samples(df4=Path("data/uniprotkb_reviewed_true_AND_existence_1_2
     filtered_df = filtered_df[filtered_df["Sequence"].str.contains("B") == False]
     filtered_df = filtered_df[filtered_df["Sequence"].str.contains("Z") == False]
     filtered_df = filtered_df[filtered_df["Sequence"].str.contains("U") == False]
+    filtered_df = filtered_df[filtered_df["Sequence"].str.contains("X") == False]
 
     # cut it down to the same number of sequences as the AMP file
 
-    df5 = filtered_df.head(773)
+    df5 = filtered_df.head(730)
 
     df5.to_csv(Path("data/nonAMP.csv"), index = False)
 
@@ -169,6 +171,28 @@ print(get_uniprot_samples())
 # 75%    115.000000
 # max    133.000000
 
+
+"""
+Since changing to remove X 
+        Length
+count  730.000000
+mean    57.736986
+std     60.274287
+min      2.000000
+25%     21.000000
+50%     42.500000
+75%     62.000000
+max    255.000000
+           Length
+count  730.000000
+mean    89.067123
+std     29.019640
+min     10.000000
+25%     67.000000
+50%     92.000000
+75%    113.750000
+max    132.000000
+"""
 
 def merge_files():
     """

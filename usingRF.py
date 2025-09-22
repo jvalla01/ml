@@ -23,7 +23,7 @@ X_train = pd.read_csv("data/training_x.csv")  # to get the original column names
 
 #embed sequences...
     #make sequence into a list
-sequence = "AQKCGEQGRGAKCPNCLCCGRYGFCGSTPDYCGVGCQSQCRGCR"
+sequence = input("Paste a sequence here: ")
 seqlist = list(sequence)
 #print(seqlist)
 

@@ -136,6 +136,8 @@ def split_dataset(mixed_dataset=Path("data/NAMP+AMP.csv")):
 
 #split_dataset()
 
+"""now using embedding_on_all_reviewed_uniprot_proteins.py instead!"""
+
 def embedding():
 
 
@@ -191,6 +193,6 @@ def embedding():
 
     return
 
-embedding()
+#embedding()
 
 

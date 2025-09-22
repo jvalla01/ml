@@ -77,3 +77,27 @@ joblib.dump(best_rf, 'RF_all.pkl')
 #         graph.render(filename=filename, format='png', cleanup=True)
 #         print(f"Saved tree {i} as {filename}")
 
+"""
+Random forest Results:
+              precision    recall  f1-score   support
+
+           0       0.93      0.92      0.92        72
+           1       0.92      0.93      0.93        74
+
+    accuracy                           0.92       146
+   macro avg       0.92      0.92      0.92       146
+weighted avg       0.92      0.92      0.92       146
+
+Random forest Results:
+              precision    recall  f1-score   support
+
+           0       0.94      0.89      0.92        73
+           1       0.90      0.95      0.92        73
+
+    accuracy                           0.92       146
+   macro avg       0.92      0.92      0.92       146
+weighted avg       0.92      0.92      0.92       146
+
+Best hyperparameters: {'max_depth': 19, 'n_estimators': 59}
+
+"""
